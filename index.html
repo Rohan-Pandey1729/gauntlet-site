@@ -224,7 +224,7 @@ Gauntlet: firing 15 adversarial probes at $URL ...
         <li>GitHub PR-comment integration</li>
         <li>LLM persona generation + judge</li>
       </ul>
-      <a class="btn" href="#" >Start 14-day trial</a>
+      <a class="btn" href="https://tally.so/r/WOZ17N" target="_blank" rel="noopener">Join the waitlist</a>
     </div>
     <div class="tier">
       <h3>Enterprise</h3>
@@ -244,62 +244,13 @@ Gauntlet: firing 15 adversarial probes at $URL ...
 
 <div class="band" id="waitlist"><div class="wrap">
   <h2>Your users are already red-teaming your agent.</h2>
-  <p>Do it first. Join the waitlist for the hosted dashboard — history, regression diffing, and scheduled runs.</p>
-  <form id="wl-form" class="wl">
-    <input id="wl-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email">
-    <button class="btn" type="submit">Join waitlist</button>
-  </form>
-  <div id="wl-msg" class="wl-msg"></div>
+  <p>Do it first. Join the waitlist for the hosted dashboard — history, regression diffing, scheduled runs, and trust reports.</p>
+  <a class="btn wl-cta" href="https://tally.so/r/WOZ17N" target="_blank" rel="noopener">Join the waitlist →</a>
 </div></div>
 
 <style>
-  .wl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
-  .wl input{background:var(--panel);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:14px;padding:11px 14px;border-radius:8px;width:300px;max-width:80vw}
-  .wl input:focus{outline:none;border-color:var(--accent)}
-  .wl .btn{padding:11px 22px;border:none;cursor:pointer}
-  .wl-msg{margin-top:14px;font-family:var(--mono);font-size:13px;min-height:18px}
-  .wl-msg.ok{color:var(--green)} .wl-msg.err{color:var(--accent)}
+  .wl-cta{display:inline-block;margin-top:8px;padding:12px 28px;font-size:14px}
 </style>
-<script>
-  // Waitlist target resolution:
-  //   - window.GAUNTLET_API (explicit override)  -> POST there
-  //   - localhost                                -> local dashboard API
-  //   - otherwise (deployed, no backend yet)     -> graceful mailto fallback
-  const GAUNTLET_API = window.GAUNTLET_API
-    || (location.hostname === "localhost" ? "http://localhost:8001" : "");
-  const WAITLIST_EMAIL = "gauntletvectorlabs@gmail.com";
-  const form = document.getElementById("wl-form");
-  const msg = document.getElementById("wl-msg");
-
-  function mailtoFallback(email) {
-    const subject = encodeURIComponent("Gauntlet waitlist");
-    const body = encodeURIComponent("I'd like early access to the Gauntlet dashboard. Email: " + email);
-    window.location.href = `mailto:${WAITLIST_EMAIL}?subject=${subject}&body=${body}`;
-    msg.className = "wl-msg ok";
-    msg.textContent = "Opening your email client — send it and you're on the list.";
-  }
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("wl-email").value.trim();
-    msg.className = "wl-msg"; msg.textContent = "…";
-    if (!GAUNTLET_API) { mailtoFallback(email); return; }
-    try {
-      const body = new URLSearchParams({ email, source: "landing" });
-      const r = await fetch(GAUNTLET_API + "/waitlist", { method: "POST", body });
-      const d = await r.json();
-      if (d.ok) {
-        msg.className = "wl-msg ok";
-        msg.textContent = d.added ? "You're on the list — we'll be in touch." : "You're already on the list.";
-        form.reset();
-      } else {
-        msg.className = "wl-msg err"; msg.textContent = d.error || "Something went wrong.";
-      }
-    } catch (err) {
-      mailtoFallback(email);   // backend unreachable -> don't lose the lead
-    }
-  });
-</script>
 
 <footer><div class="wrap">
   <div>© 2026 Gauntlet · Break your agent before your users do.</div>
