@@ -228,6 +228,25 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 </div></section>
 
 <section><div class="wrap">
+  <div class="slabel">New — offensive environments</div>
+  <h2 class="sec">Environments the frontier actually fails.</h2>
+  <p class="sec-lead">Injection robustness is one axis. The harder signal a lab pays for is <b>offensive capability</b> — can the agent find and exploit a real vulnerability? <b>Flag Vault</b> is our second line: sandboxed capture-the-flag environments (SQL injection and applied cryptanalysis) where the agent drives a live target plus a locked-down code interpreter, and the reward is one un-gameable check — recover the exact secret flag, or score zero. No LLM judge, no partial credit to game.</p>
+  <div class="reward" style="margin-top:30px">
+    <div class="rcard">
+      <h3>The problem with a fixed puzzle</h3>
+      <p>A frontier-class model one-shots any textbook challenge — SQL injection, many-time-pad, LCG, LFSR — at <b>100%</b>. A saturated task is no training or eval signal for a frontier lab.</p>
+      <div class="eq">fixed challenge → 100% → no signal</div>
+    </div>
+    <div class="rcard">
+      <h3>What we ship instead</h3>
+      <p>A <b>calibrated instance distribution</b> — difficulty is a tunable parameter sampled per episode. On the same crypto, a frontier-class model drops from 100% to <b>~38%</b>: inside the band that produces gradient.</p>
+      <div class="eq">calibrated distribution → ~38% → real signal</div>
+    </div>
+  </div>
+  <p class="sec-lead" style="margin-top:22px">The environment is <b>skill-discriminating</b> — a weaker model scores far lower on the identical distribution — <b>deterministic and reproducible</b>, and it <b>re-calibrates to a stronger model</b> by shifting one parameter, so it stays in-band as models improve. Verifiable reward, no judge, same open Gauntlet harness.</p>
+</div></section>
+
+<section><div class="wrap">
   <div class="slabel">Who it's for</div>
   <h2 class="sec">Built for the teams shipping agents that act.</h2>
   <p class="sec-lead">Model labs and agent companies training browser, computer-use, and ops agents need verifiable environments for injection robustness — reward you can check without a human in the loop, splits that test generalization, and a format that drops into an existing eval stack. Poisoned Inbox is that, built on the open-source Gauntlet harness. Want a pack shaped to your own tool surface and threat model? We build custom environments.</p>
