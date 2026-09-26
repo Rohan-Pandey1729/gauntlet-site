@@ -48,6 +48,13 @@ nav a.lnk:hover,nav a.lnk.on{color:var(--fg)}
 .pip{font-family:var(--mono);font-size:13px;color:var(--mid);border:1px solid var(--line2);
   border-radius:7px;padding:7px 11px;background:var(--ink2)}
 .pip b{color:var(--hold);font-weight:500}
+.hamburger{display:none;flex-direction:column;gap:4px;width:40px;height:40px;flex:0 0 auto;
+  align-items:center;justify-content:center;background:var(--ink2);border:1px solid var(--line2);
+  border-radius:9px;cursor:pointer;margin-left:10px}
+.hamburger span{display:block;width:18px;height:2px;background:var(--fg);border-radius:2px;transition:transform .2s ease,opacity .2s ease}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--disp);
   font-weight:600;font-size:15px;border-radius:9px;padding:11px 18px;cursor:pointer;
   border:1px solid transparent;transition:transform .12s ease,background .18s ease,border-color .18s ease}
@@ -118,8 +125,17 @@ pre .p{color:var(--dim)}pre .g{color:var(--fg)}pre .c{color:var(--hold)}pre .r{c
 footer{padding:40px 0}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--dim);font-size:14px}
 .f-links{display:flex;gap:20px}.f-links a:hover{color:var(--fg)}
+@media(max-width:960px){
+  .hamburger{display:flex}
+  .nav-links{position:absolute;top:63px;left:0;right:0;flex-direction:column;align-items:stretch;
+    gap:0;background:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 20px 40px -12px rgba(0,0,0,.7);
+    padding:0 24px;max-height:0;overflow:hidden;opacity:0;pointer-events:none;
+    transition:max-height .24s ease,opacity .2s ease,padding .24s ease}
+  .nav-links.open{max-height:82vh;opacity:1;pointer-events:auto;padding:6px 24px 18px}
+  .nav-links .lnk{padding:14px 2px;border-bottom:1px solid var(--line);font-size:16px}
+  .nav-links .pip{display:none}
+}
 @media(max-width:900px){
-  .nav-links .lnk,.pip{display:none}
   h1.head{font-size:38px}.reward,.two{grid-template-columns:1fr}
   .grid4{grid-template-columns:1fr 1fr}h2.sec{font-size:28px}
 }
@@ -129,15 +145,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 
 <nav><div class="wrap">
   <a class="brand" href="index.html"><span class="glyph"></span>Gauntlet</a>
-  <div class="nav-links">
+  <div class="nav-links" id="navlinks">
+    <a class="lnk on" href="environments.html">Environments</a>
     <a class="lnk" href="index.html#how">How it works</a>
     <a class="lnk" href="bench.html">Benchmark</a>
-    <a class="lnk on" href="environments.html">Environments</a>
     <a class="lnk" href="index.html#pricing">Pricing</a>
+    <a class="lnk" href="https://gauntlet-dashboard-gxqk.onrender.com/scan">Free scan</a>
+    <a class="lnk" href="/gauntlet-site/docs/">Docs</a>
     <a class="lnk" href="https://github.com/GauntletVectorLabs/gauntlet" target="_blank" rel="noopener">GitHub</a>
-    <span class="pip">pip install <b>poisoned-inbox</b></span>
   </div>
   <a class="btn solid sm" href="mailto:gauntletvectorlabs@gmail.com?subject=Poisoned%20Inbox%20sample%20pack">Get the pack</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
 </div></nav>
 
 <header class="hero"><div class="wrap">
@@ -230,20 +248,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 <section><div class="wrap">
   <div class="slabel">New — offensive environments</div>
   <h2 class="sec">Environments the frontier actually fails.</h2>
-  <p class="sec-lead">Injection robustness is one axis. The harder signal a lab pays for is <b>offensive capability</b> — can the agent find and exploit a real vulnerability? <b>Flag Vault</b> is our second line: sandboxed capture-the-flag environments (SQL injection and applied cryptanalysis) where the agent drives a live target plus a locked-down code interpreter, and the reward is one un-gameable check — recover the exact secret flag, or score zero. No LLM judge, no partial credit to game.</p>
+  <p class="sec-lead">Injection robustness is one axis. The harder signal a lab pays for is <b>offensive capability under a real budget</b>. <b>RE-Vault</b> is our sharpest result: a reverse-engineering environment where the agent is handed a stripped binary and must recover the exact 16-byte key that unlocks it — with a full shell, permission to install any tool it wants (z3, CryptoMiniSat), a 30-minute budget, and <b>no turn caps</b>. The reward is one un-gameable check: the recovered key is exact-match, or the score is zero. No LLM judge, no partial credit to game.</p>
   <div class="reward" style="margin-top:30px">
     <div class="rcard">
       <h3>The problem with a fixed puzzle</h3>
-      <p>A frontier-class model one-shots any textbook challenge — SQL injection, many-time-pad, LCG, LFSR — at <b>100%</b>. A saturated task is no training or eval signal for a frontier lab.</p>
-      <div class="eq">fixed challenge → 100% → no signal</div>
+      <p>A frontier model one-shots any textbook challenge — SQL injection, many-time-pad, LCG — at <b>100%</b>. And "difficulty" from a turn limit is fake: lift the cap and the model solves it anyway. A saturated task is no training or eval signal.</p>
+      <div class="eq">fixed / turn-capped → 100% → no signal</div>
     </div>
     <div class="rcard">
       <h3>What we ship instead</h3>
-      <p>A <b>calibrated instance distribution</b> — difficulty is a tunable parameter sampled per episode. On the same crypto, a current frontier model drops from 100% to <b>~27%</b> (n=64): it fails ~73% of the time.</p>
-      <div class="eq">calibrated distribution → ~27% → real signal</div>
+      <p>A <b>calibrated instance generator</b>, tuned against the strongest automated attack. On RE-Vault, <b>GPT-5.6 and Claude Opus-5 both score 0%</b> uncapped, with full tools — and <b>CryptoMiniSat (8 threads) can't recover the key in 31 minutes</b> either.</p>
+      <div class="eq">calibrated + solver-proof → 0% frontier → real headroom</div>
     </div>
   </div>
-  <p class="sec-lead" style="margin-top:22px">The environment is <b>skill-discriminating</b> — a weaker model scores far lower on the identical distribution — <b>deterministic and reproducible</b>, and it <b>re-calibrates to a stronger model</b> by shifting one parameter, so it stays in-band as models improve. Verifiable reward, no judge, same open Gauntlet harness.</p>
+  <p class="sec-lead" style="margin-top:22px">Every instance is <b>oracle-solvable</b> (a known solution exists), <b>contamination-free</b> (freshly generated per episode — nothing to memorize), and <b>re-calibrates</b>: one dial moves difficulty as models improve, so it stays in-band. Verifiable reward, no judge, same open Gauntlet harness — and it's <b>currently in certification with a frontier-lab data vendor</b>.</p>
 </div></section>
 
 <section><div class="wrap">
@@ -295,5 +313,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   </div>
 </div></footer>
 
+<script>
+(function(){
+  var h=document.getElementById('hamburger'), n=document.getElementById('navlinks');
+  if(h&&n){
+    h.addEventListener('click',function(){
+      var open=n.classList.toggle('open'); h.classList.toggle('open',open);
+      h.setAttribute('aria-expanded',open?'true':'false');
+    });
+    n.addEventListener('click',function(e){ if(e.target.classList.contains('lnk')){ n.classList.remove('open'); h.classList.remove('open'); h.setAttribute('aria-expanded','false'); } });
+  }
+})();
+</script>
 </body>
 </html>

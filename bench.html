@@ -43,6 +43,13 @@ nav .wrap{display:flex;align-items:center;gap:28px;height:64px}
 nav a.lnk{color:var(--mid);font-size:14.5px;font-weight:500}
 nav a.lnk:hover{color:var(--fg)}
 .nav-links{display:flex;gap:22px;align-items:center}
+.hamburger{display:none;flex-direction:column;gap:4px;width:40px;height:40px;flex:0 0 auto;
+  align-items:center;justify-content:center;background:var(--ink2);border:1px solid var(--line2);
+  border-radius:9px;cursor:pointer;margin-left:10px}
+.hamburger span{display:block;width:18px;height:2px;background:var(--fg);border-radius:2px;transition:transform .2s ease,opacity .2s ease}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--disp);
   font-weight:600;font-size:15px;border-radius:9px;padding:11px 18px;cursor:pointer;
   border:1px solid transparent;transition:transform .12s ease,background .18s ease,border-color .18s ease}
@@ -138,10 +145,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 footer a{color:var(--mid)}footer a:hover{color:var(--fg)}
 .f-links{display:flex;gap:20px}
 
+@media(max-width:960px){
+  .hamburger{display:flex}
+  .nav-links{position:absolute;top:63px;left:0;right:0;flex-direction:column;align-items:stretch;
+    gap:0;background:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 20px 40px -12px rgba(0,0,0,.7);
+    padding:0 24px;max-height:0;overflow:hidden;opacity:0;pointer-events:none;
+    transition:max-height .24s ease,opacity .2s ease,padding .24s ease}
+  .nav-links.open{max-height:82vh;opacity:1;pointer-events:auto;padding:6px 24px 18px}
+  .nav-links .lnk{padding:14px 2px;border-bottom:1px solid var(--line);font-size:16px}
+}
 @media(max-width:900px){
   h1.head{font-size:36px}
   .compare{grid-template-columns:1fr}
-  .nav-links .lnk{display:none}
 }
 </style>
 </head>
@@ -149,13 +164,17 @@ footer a{color:var(--mid)}footer a:hover{color:var(--fg)}
 
 <nav><div class="wrap">
   <a class="brand" href="index.html"><span class="glyph"></span>Gauntlet</a>
-  <div class="nav-links">
+  <div class="nav-links" id="navlinks">
+    <a class="lnk" href="environments.html">Environments</a>
     <a class="lnk" href="index.html#how">How it works</a>
-    <a class="lnk" href="bench.html">Benchmark</a>
+    <a class="lnk on" href="bench.html">Benchmark</a>
     <a class="lnk" href="index.html#pricing">Pricing</a>
+    <a class="lnk" href="https://gauntlet-dashboard-gxqk.onrender.com/scan">Free scan</a>
+    <a class="lnk" href="/gauntlet-site/docs/">Docs</a>
     <a class="lnk" href="https://github.com/GauntletVectorLabs/gauntlet" target="_blank" rel="noopener">GitHub</a>
   </div>
   <a class="btn solid sm" href="index.html">Back to gauntlet</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
 </div></nav>
 
 <header class="hero"><div class="wrap">
@@ -450,6 +469,18 @@ footer a{color:var(--mid)}footer a:hover{color:var(--fg)}
   ths.forEach(function(th) {
     th.addEventListener('click', function() { sortBy(th.dataset.key, th.dataset.type); });
   });
+})();
+</script>
+<script>
+(function(){
+  var h=document.getElementById('hamburger'), n=document.getElementById('navlinks');
+  if(h&&n){
+    h.addEventListener('click',function(){
+      var open=n.classList.toggle('open'); h.classList.toggle('open',open);
+      h.setAttribute('aria-expanded',open?'true':'false');
+    });
+    n.addEventListener('click',function(e){ if(e.target.classList.contains('lnk')){ n.classList.remove('open'); h.classList.remove('open'); h.setAttribute('aria-expanded','false'); } });
+  }
 })();
 </script>
 </body>
