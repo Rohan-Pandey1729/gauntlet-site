@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
@@ -289,6 +290,19 @@ python benchmark/leaderboard.py</pre>
   l.addEventListener('click', function(e) {
     if (e.target.tagName === 'A') { l.classList.remove('open'); m.setAttribute('aria-expanded', 'false'); }
   });
+})();
+</script>
+<script>
+(function(){
+  var top=document.querySelector('.top');
+  function onScroll(){ top.classList.toggle('scrolled', window.scrollY>24); }
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  var ls=document.querySelectorAll('.ledger');
+  if(!('IntersectionObserver' in window)){ ls.forEach(function(l){ l.classList.add('seen'); }); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
+  },{threshold:.25});
+  ls.forEach(function(l){ io.observe(l); });
 })();
 </script>
 </body>

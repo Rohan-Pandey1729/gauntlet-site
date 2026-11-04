@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
@@ -49,27 +50,27 @@
       <th scope="col" class="plot"><div class="scale" aria-hidden="true"><span>0</span><span>Reference solution, 1.0</span></div><span class="sr">Score plot</span></th>
     </tr></thead>
     <tbody>
-      <tr class="held">
+      <tr class="held" style="--r:0">
         <th scope="row">Decode a random binary code <span class="tag">Held</span><small>Fully disclosed, no hidden rule. The best-known algorithms are exponential.</small></th>
         <td class="num" data-model="GPT-6.1 Sol">0.26</td><td class="num" data-model="Opus 5.5">0.26</td>
         <td class="plot"><div class="strip" aria-hidden="true"><i class="mark a" style="--x:0.259" title="GPT-6.1 Sol: 0.259"></i><i class="mark b" style="--x:0.26" title="Claude Opus 5.5: 0.260"></i></div></td>
       </tr>
-      <tr>
+      <tr style="--r:1">
         <th scope="row">Build a native compiler from a spec<small>Type inference, GC, effect handlers, no C toolchain. Four hours.</small></th>
         <td class="num" data-model="GPT-6.1 Sol">0.89</td><td class="num" data-model="Opus 5.5">0.93</td>
         <td class="plot"><div class="strip" aria-hidden="true"><i class="mark a" style="--x:0.887" title="GPT-6.1 Sol: 0.887"></i><i class="mark b" style="--x:0.931" title="Claude Opus 5.5: 0.931"></i></div></td>
       </tr>
-      <tr>
+      <tr style="--r:2">
         <th scope="row">Prove 17 Putnam-hard theorems in Lean<small>Infinite descent, Mordell equations, Vieta jumping.</small></th>
         <td class="num" data-model="GPT-6.1 Sol">1.00</td><td class="num" data-model="Opus 5.5">1.00</td>
         <td class="plot"><div class="strip" aria-hidden="true"><i class="mark a" style="--x:1.0" title="GPT-6.1 Sol: 1.000"></i><i class="mark b" style="--x:1.0" title="Claude Opus 5.5: 1.000"></i></div></td>
       </tr>
-      <tr>
+      <tr style="--r:3">
         <th scope="row">Repair a 2,546-line system<small>Seven coupled defects across five files.</small></th>
         <td class="num" data-model="GPT-6.1 Sol">1.00</td><td class="num" data-model="Opus 5.5">1.00</td>
         <td class="plot"><div class="strip" aria-hidden="true"><i class="mark a" style="--x:1.0" title="GPT-6.1 Sol: 1.000"></i><i class="mark b" style="--x:1.0" title="Claude Opus 5.5: 1.000"></i></div></td>
       </tr>
-      <tr>
+      <tr style="--r:4">
         <th scope="row">Implement an interpreter from a spec<small>Fifteen deliberately non-standard semantic rules.</small></th>
         <td class="num" data-model="GPT-6.1 Sol">1.00</td><td class="num" data-model="Opus 5.5">1.00</td>
         <td class="plot"><div class="strip" aria-hidden="true"><i class="mark a" style="--x:1.0" title="GPT-6.1 Sol: 1.000"></i><i class="mark b" style="--x:1.0" title="Claude Opus 5.5: 1.000"></i></div></td>
@@ -160,6 +161,19 @@
   </nav>
 </div></footer>
 <script>
+(function(){
+  var top=document.querySelector('.top');
+  function onScroll(){ top.classList.toggle('scrolled', window.scrollY>24); }
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  var ls=document.querySelectorAll('.ledger');
+  if(!('IntersectionObserver' in window)){ ls.forEach(function(l){ l.classList.add('seen'); }); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
+  },{threshold:.25});
+  ls.forEach(function(l){ io.observe(l); });
+})();
+</script>
+<script>
 // Menu toggle, pip copy button and the recorded attack replay for the home page.
 (function(){
   var m=document.getElementById('menu'), l=document.getElementById('links');
@@ -239,11 +253,17 @@
     show(selected);
   }
 
-  run.classList.add('play');
   draw();
+  // Play the replay once, when it is actually on screen.
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      if(es[0].isIntersecting){ run.classList.add('play'); io.disconnect(); }
+    },{threshold:.35});
+    io.observe(run);
+  } else { run.classList.add('play'); }
   var lastW=plot.clientWidth;
   window.addEventListener('resize',function(){
-    if(plot.clientWidth!==lastW){ lastW=plot.clientWidth; run.classList.remove('play'); draw(); }
+    if(plot.clientWidth!==lastW){ lastW=plot.clientWidth; draw(); }
   });
   run.addEventListener('keydown',function(e){
     if(e.key==='ArrowLeft'){ show(Math.max(0,selected-1)); e.preventDefault(); }

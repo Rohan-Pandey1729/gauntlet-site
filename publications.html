@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
@@ -42,7 +43,7 @@
       <span class="when">Preprint, November 2026</span>
       <h3>Fair Environments Saturate: Lessons from Thirty Verifiable Agentic Environments Built to Defeat Frontier Models</h3>
       <div class="by">Rohan Pandey, Gauntlet Vector Labs</div>
-      <p>We built and probed 32 fully specified, deterministically graded agent environments across eleven capability axes, from estimation and reverse engineering to long-horizon repair and novel Lean theorem proving. Every environment that met the fairness bar was saturated by GPT-6.1 Sol and Claude Opus 5.5. The only clean hold came from computational hardness.</p>
+      <p>We built and probed 32 fully specified, deterministically graded agent environments across eleven capability axes, from estimation and reverse engineering to long-horizon repair and novel Lean theorem proving. No environment that met the fairness bar held GPT or Claude frontier agents: all but one came within a tenth of the reference solution. The only clean hold came from computational hardness.</p>
       <ul class="finds">
         <li>A falsifiable conjecture: fair, compute-light tasks are codeable, so a tool-using frontier agent saturates them.</li>
         <li>Random syndrome decoding holds both frontier models at about 0.26 of the reference, with nothing hidden.</li>
@@ -76,6 +77,19 @@
     <a href="mailto:gauntletvectorlabs@gmail.com">gauntletvectorlabs@gmail.com</a>
   </nav>
 </div></footer>
+<script>
+(function(){
+  var top=document.querySelector('.top');
+  function onScroll(){ top.classList.toggle('scrolled', window.scrollY>24); }
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  var ls=document.querySelectorAll('.ledger');
+  if(!('IntersectionObserver' in window)){ ls.forEach(function(l){ l.classList.add('seen'); }); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); } });
+  },{threshold:.25});
+  ls.forEach(function(l){ io.observe(l); });
+})();
+</script>
 <script>
 (function(){
   var m=document.getElementById('menu'), l=document.getElementById('links');
