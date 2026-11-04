@@ -20,6 +20,7 @@
 <header class="top"><div class="wrap">
   <a class="brand" href="index.html" aria-label="Gauntlet home"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="gvl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5C6C"/><stop offset="1" stop-color="#B15CFF"/></linearGradient></defs><rect width="32" height="32" rx="7.25" fill="url(#gvl)"/><path fill="#fff" d="M16 6.5l7.25 2.75v8c0 4.5-3.375 7.25-7.25 8.625-3.875-1.375-7.25-4.125-7.25-8.625v-8z"/><path fill="#0A0D13" d="M17.875 9.375 14.5 16.375h2.25l-1.875 6.875 4.875-8h-2.5z"/></svg>Gauntlet</a>
   <nav class="links" id="links" aria-label="Main">
+    <a href="audit.html">Audit</a>
     <a href="environments.html">Environments</a>
     <a href="publications.html">Research</a>
     <a href="index.html#redteam">Red-teaming</a>
@@ -97,9 +98,9 @@
 <section class="rule"><div class="wrap">
   <h2>What we do</h2>
   <dl class="standard">
+    <div><dt>Environment audits</dt><dd>We attack RL environments the way a reward-maximizing policy would, and report every way to score without solving the task. <a href="audit.html">How it works</a>.</dd></div>
     <div><dt>Environments</dt><dd>Containerized tasks with a deterministic reward, a reference solution that scores 1.0 and a do-nothing agent that scores zero. Calibrated against current frontier models.</dd></div>
     <div><dt>Research</dt><dd>We publish what holds a frontier model, what saturates, and the artifacts and reward hacks that fake difficulty.</dd></div>
-    <div><dt>Agent red-teaming</dt><dd>An open-source adaptive attacker that breaks AI agents before their users do, and turns each break into a regression test.</dd></div>
   </dl>
 </div></section>
 
@@ -144,6 +145,7 @@
 <section id="pricing"><div class="wrap">
   <h2>Work with us</h2>
   <div class="offers">
+    <div class="offer"><h3>Environment audit</h3><p>Static review and container probes for every task in your pack, with ranked findings, fixes and a CI gate.</p><span class="amt">Let's talk</span><a href="mailto:gauntletvectorlabs@gmail.com?subject=Environment%20audit">Request an audit</a></div>
     <div class="offer"><h3>Environment pack</h3><p>100 or more tasks in your domain, calibrated against a frontier model, with a held-out split.</p><span class="amt">From $2,500</span><a href="mailto:gauntletvectorlabs@gmail.com?subject=Gauntlet%20environment%20pack">Request a pack</a></div>
     <div class="offer"><h3>Custom environments</h3><p>Built around your capability targets, and recalibrated as models improve.</p><span class="amt">Let's talk</span><a href="mailto:gauntletvectorlabs@gmail.com?subject=Custom%20environments">Contact us</a></div>
     <div class="offer"><h3>Agent assessment</h3><p>One agent across all its paths: ranked findings, reproductions, a report and a CI gate, in five business days.</p><span class="amt">$1,500</span><a href="mailto:gauntletvectorlabs@gmail.com?subject=Gauntlet%20assessment">Book one</a></div>
@@ -164,6 +166,7 @@
   <span>&copy; 2026 Gauntlet Vector Labs. Environments and evaluation research for frontier agents.</span>
   <nav aria-label="Footer">
     <a href="index.html">Home</a>
+    <a href="audit.html">Audit</a>
     <a href="environments.html">Environments</a>
     <a href="bench.html">Benchmark</a>
     <a href="publications.html">Research</a>

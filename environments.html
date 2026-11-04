@@ -20,6 +20,7 @@
 <header class="top"><div class="wrap">
   <a class="brand" href="index.html" aria-label="Gauntlet home"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="gvl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5C6C"/><stop offset="1" stop-color="#B15CFF"/></linearGradient></defs><rect width="32" height="32" rx="7.25" fill="url(#gvl)"/><path fill="#fff" d="M16 6.5l7.25 2.75v8c0 4.5-3.375 7.25-7.25 8.625-3.875-1.375-7.25-4.125-7.25-8.625v-8z"/><path fill="#0A0D13" d="M17.875 9.375 14.5 16.375h2.25l-1.875 6.875 4.875-8h-2.5z"/></svg>Gauntlet</a>
   <nav class="links" id="links" aria-label="Main">
+    <a href="audit.html">Audit</a>
     <a href="environments.html" aria-current="page">Environments</a>
     <a href="publications.html">Research</a>
     <a href="index.html#redteam">Red-teaming</a>
@@ -102,7 +103,7 @@
     <div><dt>Proof it can be solved</dt><dd>A reference solution scores 1.0 on the grading platform before any model runs.</dd></div>
     <div><dt>Proof it isn't free</dt><dd>A do-nothing agent scores at or near zero.</dd></div>
     <div><dt>Deterministic grading</dt><dd>The reward is a pure function of what the agent produced. No LLM judge.</dd></div>
-    <div><dt>A sealed verifier</dt><dd>Grading runs in a separate sandbox, so an agent can't rewrite its own score.</dd></div>
+    <div><dt>A sandboxed solver</dt><dd>Agent code runs as an unprivileged user and cannot read the grader. Every pack goes through <a href="audit.html">Gauntlet Audit</a>, including attempts to rewrite the score.</dd></div>
     <div><dt>Real model runs</dt><dd>We run current frontier models and read the traces for cheating and spec gaps.</dd></div>
     <div><dt>Honest labels</dt><dd>If frontier models saturate an environment, we say so.</dd></div>
   </dl>
@@ -141,6 +142,7 @@ poisoned-inbox calibrate --model &lt;model&gt; --runs 8</pre>
   <span>&copy; 2026 Gauntlet Vector Labs. Environments and evaluation research for frontier agents.</span>
   <nav aria-label="Footer">
     <a href="index.html">Home</a>
+    <a href="audit.html">Audit</a>
     <a href="environments.html">Environments</a>
     <a href="bench.html">Benchmark</a>
     <a href="publications.html">Research</a>
