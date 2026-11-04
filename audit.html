@@ -88,11 +88,16 @@
     <div class="step"><span class="n">2</span><h3>Attack</h3><p>We build the image and grade four runs: do nothing, the reference solution, a planted reward hook, and a solver that tries to read the grader.</p></div>
     <div class="step"><span class="n">3</span><h3>Gate</h3><p>Ranked findings with evidence and a fix for each, as Markdown and JSON, plus an exit code that fails CI on anything you choose.</p></div>
   </div>
+  <pre class="cli"><span class="p">$</span> pip install gauntlet-agent
+<span class="p">$</span> gauntlet audit path/to/task                <span class="p"># static rules, nothing executes</span>
+<span class="p">$</span> gauntlet audit path/to/task --probe        <span class="p"># also attack the verifier in Docker</span>
+<span class="p">$</span> gauntlet audit tasks/* --md audit.md --fail-on HIGH   <span class="p"># gate a whole pack in CI</span></pre>
+  <p class="note">Open source under MIT. Harbor task format today.</p>
 </div></section>
 
 <section class="last"><div class="wrap">
   <h2>Send us an environment pack.</h2>
-  <p class="lede">Harbor format today. We return a report per task and fix what we find on request.</p>
+  <p class="lede">Or run the open-source CLI yourself. For a pack, we run every probe, read the findings with you, and fix what we find on request.</p>
   <div class="next">
     <a class="btn" href="mailto:gauntletvectorlabs@gmail.com?subject=Environment%20audit">Request an audit</a>
   </div>
