@@ -88,7 +88,7 @@
 </div></div>
 
 <section class="numbers"><div class="wrap">
-  <h2>Two months of trying to beat the frontier, counted.</h2>
+  <h2>Every attempt to beat the frontier, counted.</h2>
   <dl class="stats">
     <div><dt><b class="odo">32</b></dt><dd>environments built and probed on GPT and Claude frontier agents</dd></div>
     <div><dt><b class="odo">11</b></dt><dd>capability axes, from estimation to Lean theorem proving</dd></div>
@@ -238,7 +238,8 @@
       var cell=document.createElement('span');
       if(/[0-9]/.test(ch)){
         cell.className='dg'; cell.setAttribute('aria-hidden','true');
-        var col=document.createElement('span'); col.style.setProperty('--d',ch); col.style.setProperty('--k',k);
+        var w=document.createElement('span'); w.className='w'; w.textContent=ch; cell.appendChild(w);
+        var col=document.createElement('span'); col.className='col'; col.style.setProperty('--d',ch); col.style.setProperty('--k',k);
         col.textContent='0123456789'.split('').join('\n'); cell.appendChild(col);
       } else { cell.textContent=ch; cell.setAttribute('aria-hidden','true'); }
       o.appendChild(cell);
