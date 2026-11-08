@@ -76,8 +76,8 @@
 <section><div class="wrap">
   <h2>What it checks</h2>
   <dl class="standard two">
-    <div><dt>Exploits</dt><dd>Ways to raise the reward without solving the task.<ul class="checks"><li>Answers, the verifier or the reference solution reachable from the agent's image</li><li>Instance generators shipped with small grading seeds, so answers can be looked up</li><li>Agent code run as root while the grader is readable, or a sandbox that fails open</li><li>Verifier imports an agent file can shadow</li><li>Reward files an agent can rewrite from inside its own container</li><li>NaN and infinity slipping past numeric checks</li><li>Lean proofs with sorry, extra axioms, native_decide or a weakened statement</li></ul></dd></div>
-    <div><dt>Artifacts</dt><dd>Scores that measure something other than the skill the task claims.<ul class="checks"><li>Grading constants the instruction never states</li><li>Turn caps and short clocks that turn difficulty into throughput</li><li>All-or-nothing rewards that hide how close an agent got</li><li>Wording that triggers safety refusals instead of measuring capability</li><li>No reference solution, so a broken task looks like a hard one</li></ul></dd></div>
+    <div><dt>Exploits</dt><dd>Ways to raise the reward without solving the task.<ul class="checks"><li>Answers, the verifier or the reference solution reachable from the agent's image</li><li>Instance generators shipped with small grading seeds, so answers can be looked up</li><li>Agent code run as root while the grader is readable, or a sandbox that fails open</li><li>Verifier imports an agent file can shadow</li><li>Reward files an agent can rewrite from inside its own container</li><li>Verifier tools (python3, pytest, uv) an agent can swap for its own</li><li>A planted conftest.py or pytest.ini that passes every test</li><li>Placeholder outputs, such as an empty file or 0, that earn reward</li><li>Graded tests or expected outputs visible to the agent</li><li>Future fixes left in git history, and upstream fixes one search away</li><li>LLM judges that a note inside the answer can talk into a full score</li><li>Verifiers that accept wrong answers: we mutate the reference answer and count what still passes</li><li>Answers checked by substring, so a dump of every candidate passes</li><li>NaN and infinity slipping past numeric checks</li><li>Lean proofs with sorry, extra axioms, native_decide or a weakened statement</li></ul></dd></div>
+    <div><dt>Artifacts</dt><dd>Scores that measure something other than the skill the task claims.<ul class="checks"><li>Grading constants the instruction never states</li><li>Turn caps and short clocks that turn difficulty into throughput</li><li>All-or-nothing rewards that hide how close an agent got</li><li>Wording that triggers safety refusals instead of measuring capability</li><li>Output files the verifier grades but the instruction never names</li><li>Scores that change between identical runs of the reference solution</li><li>Near-duplicate tasks, and one task's hidden data shipped in another's image</li><li>No reference solution, so a broken task looks like a hard one</li></ul></dd></div>
   </dl>
 </div></section>
 
@@ -85,14 +85,14 @@
   <h2>How an audit runs</h2>
   <div class="steps">
     <div class="step"><span class="n">1</span><h3>Read</h3><p>Static rules read task.toml, the build context, the verifier and the reference solution. Nothing executes.</p></div>
-    <div class="step"><span class="n">2</span><h3>Attack</h3><p>We build the image and grade four runs: do nothing, the reference solution, a planted reward hook, and a solver that tries to read the grader.</p></div>
+    <div class="step"><span class="n">2</span><h3>Attack</h3><p>We build the image and grade a set of attacks: do nothing, the reference solution twice, deliberately wrong answers, placeholder outputs, a note to the grader, a planted reward hook, swapped verifier tools, a hijacked test runner, and a solver that tries to read the grader.</p></div>
     <div class="step"><span class="n">3</span><h3>Gate</h3><p>Ranked findings with evidence and a fix for each, as Markdown and JSON, plus an exit code that fails CI on anything you choose.</p></div>
   </div>
   <pre class="cli"><span class="p">$</span> pip install gauntlet-agent
 <span class="p">$</span> gauntlet audit path/to/task                <span class="p"># static rules, nothing executes</span>
 <span class="p">$</span> gauntlet audit path/to/task --probe        <span class="p"># also attack the verifier in Docker</span>
 <span class="p">$</span> gauntlet audit tasks/* --md audit.md --fail-on HIGH   <span class="p"># gate a whole pack in CI</span></pre>
-  <p class="note">Open source under MIT. Harbor task format today.</p>
+  <p class="note">Open source under MIT. Harbor tasks (shared or separate verifier), SWE-bench-style instance files and Inspect AI tasks.</p>
 </div></section>
 
 <section class="last"><div class="wrap">

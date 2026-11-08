@@ -78,7 +78,7 @@
   <h2>How an audit runs</h2>
   <div class="steps">
     <div class="step"><span class="n">1</span><h3>Read</h3><p>Static rules read the task config, build context, verifier and reference solution. Nothing executes.</p></div>
-    <div class="step"><span class="n">2</span><h3>Attack</h3><p>We build the image and grade four runs: do nothing, the reference solution, a planted reward hook, and a solver that tries to read the grader.</p></div>
+    <div class="step"><span class="n">2</span><h3>Attack</h3><p>We build the image and grade a set of attacks: do nothing, the reference solution twice, deliberately wrong answers, placeholder outputs, a note to the grader, a planted reward hook, swapped verifier tools, a hijacked test runner, and a solver that tries to read the grader.</p></div>
     <div class="step"><span class="n">3</span><h3>Gate</h3><p>Ranked findings with evidence and a fix for each, as Markdown and JSON, plus an exit code that fails CI on the severity you choose.</p></div>
   </div>
   <p class="aside">Every check comes from a failure we hit in our own graders. <a href="audit.html">See the full rule list</a>.</p>
@@ -141,7 +141,7 @@
   <div class="offers">
     <div class="offer"><h3>Pilot audit</h3><p>We run every rule and probe across your task pack, walk through the findings with your team, and fix what we find on request.</p><span class="amt">Scoped on a call</span><a href="mailto:gauntletvectorlabs@gmail.com?subject=Audit%20scoping%20call&amp;body=Task%20format%20(Harbor%2C%20Inspect%2C%20other)%3A%0ANumber%20of%20tasks%3A%0AWhat%20worries%20you%3A%0A">Book a scoping call</a></div>
     <div class="offer"><h3>Pre-flight gate</h3><p>Audit wired into your intake pipeline, so every contractor-built task is checked before a reviewer or a training run sees it.</p><span class="amt">Scoped on a call</span><a href="mailto:gauntletvectorlabs@gmail.com?subject=Audit%20scoping%20call&amp;body=Task%20format%20(Harbor%2C%20Inspect%2C%20other)%3A%0ANumber%20of%20tasks%3A%0AWhat%20worries%20you%3A%0A">Talk to us</a></div>
-    <div class="offer"><h3>Command line</h3><p>The static rules and Docker probes, open source under MIT. Harbor task format today.</p><span class="amt">Free</span><a href="https://pypi.org/project/gauntlet-agent/">Install</a></div>
+    <div class="offer"><h3>Command line</h3><p>The static rules and Docker probes, open source under MIT. Harbor, SWE-bench-style and Inspect AI tasks.</p><span class="amt">Free</span><a href="https://pypi.org/project/gauntlet-agent/">Install</a></div>
   </div>
 </div></section>
 
