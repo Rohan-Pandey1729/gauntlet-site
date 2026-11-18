@@ -91,8 +91,22 @@
   <pre class="cli"><span class="p">$</span> pip install gauntlet-agent
 <span class="p">$</span> gauntlet audit path/to/task                <span class="p"># static rules, nothing executes</span>
 <span class="p">$</span> gauntlet audit path/to/task --probe        <span class="p"># also attack the verifier in Docker</span>
+<span class="p">$</span> gauntlet audit path/to/task --redteam 10   <span class="p"># turn a reward-seeking agent loose in the box</span>
+<span class="p">$</span> gauntlet harden path/to/task --probe        <span class="p"># auto-patch the holes, then re-audit to prove them gone</span>
 <span class="p">$</span> gauntlet audit tasks/* --md audit.md --fail-on HIGH   <span class="p"># gate a whole pack in CI</span></pre>
   <p class="note">Open source under MIT. Harbor tasks (shared or separate verifier), SWE-bench-style instance files and Inspect AI tasks.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>From one task to a task supply</h2>
+  <p class="lede">The same engine reaches past a single environment: a live adversary, an automatic fix, browser tasks, and a gate that screens submissions as they arrive.</p>
+  <dl class="standard two">
+    <div><dt>An adversarial agent, not only fixed probes</dt><dd>A reward-seeking model gets a shell in the container and hunts for hacks no rule anticipated. It counts against the task only when the moves that won touched the grader instead of solving it.</dd></div>
+    <div><dt>Auto-harden, then prove it</dt><dd>One command rewrites a copy of the task to close what the audit found, such as a non-root agent, a sealed grader and randomized seeds, then re-audits and shows each hole is gone.</dd></div>
+    <div><dt>Browser and full-stack tasks</dt><dd>For web environments the audit performs the attack live: it writes the graded database rows directly, calls a debug route, and flips a client-side success flag the verifier trusted.</dd></div>
+    <div><dt>A gate for a whole supply</dt><dd>Wrapped as a service, it returns PASS, FAIL or QUARANTINE on each submission in under two minutes and holds around 1,000 tasks a minute on a small pool, so a marketplace can screen contributions as they land.</dd></div>
+    <div><dt>What the hack would cost you</dt><dd>On a task with a live reward hack, a short training run drives reward to 0.99 while the policy truly solves about a third of the time. Harden the task and that gap closes.</dd></div>
+  </dl>
 </div></section>
 
 <section class="last"><div class="wrap">
